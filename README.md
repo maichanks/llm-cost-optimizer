@@ -1,4 +1,8 @@
-# LLM Cost Optimizer
+# LLM Cost Optimizer for OpenClaw
+
+[![OpenClaw Compatible](https://img.shields.io/badge/OpenClaw-Compatible-ff6b6b)](https://github.com/openclaw/openclaw)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+[![Status](https://img.shields.io/badge/status-Alpha-orange)](/LICENSE)
 
 [English](#english) | [中文](#中文)
 
@@ -8,7 +12,7 @@
 
 **Status**: Alpha | **License**: MIT | **Author**: maichanks
 
-Utilities to monitor, analyze, and reduce LLM API costs across providers.
+Utilities to monitor, analyze, and reduce LLM API costs across providers. Can be used standalone or integrated with OpenClaw.
 
 ### Features
 
@@ -17,18 +21,50 @@ Utilities to monitor, analyze, and reduce LLM API costs across providers.
 - Redis-based semantic caching
 - Budget alerts (Slack/Feishu)
 - CSV reports
+- OpenClaw integration: send alerts to OpenClaw channels
 
-### Quick Start
+### Quick Start (Standalone)
 
 ```bash
 git clone https://github.com/maichanks/llm-cost-optimizer.git
 cd llm-cost-optimizer
 pnpm install
 cp .env.example .env
-# Edit .env with your keys
+# Edit .env with your keys and alert settings
 node scripts/analyze.js --input ./logs
 node monitor.js
 ```
+
+### OpenClaw Integration
+
+You can run this as a background service and send budget alerts through OpenClaw:
+
+1. **Install to OpenClaw skills** (optional, for unified management):
+
+```bash
+cp -r llm-cost-optimizer $HOME/.openclaw/workspace/skills/
+cd $HOME/.openclaw/workspace/skills/llm-cost-optimizer
+pnpm install
+```
+
+2. **Configure alert channel** in `.env`:
+
+```env
+ALERT_CHANNEL=feishu    # or telegram, slack
+ALERT_TARGET=ou_OPEN_ID # your OpenClaw user/chat open_id
+```
+
+3. **Add cron for continuous monitoring** (runs in isolated session):
+
+```bash
+openclaw cron add \
+  --name "LLM Cost Monitor" \
+  --cron "*/30 * * * *" \
+  --session isolated \
+  --message "node $HOME/.openclaw/workspace/skills/llm-cost-optimizer/monitor.js"
+```
+
+The `monitor.js` script will check usage and send alerts via OpenClaw message API when budget thresholds are exceeded.
 
 ---
 
@@ -36,7 +72,7 @@ node monitor.js
 
 **状态**: Alpha | **许可证**: MIT | **作者**: maichanks
 
-用于监控、分析和降低多模型 LLM API 成本的实用工具集。
+用于监控、分析和降低多模型 LLM API 成本的实用工具集，可独立运行或与 OpenClaw 集成。
 
 ### 功能
 
@@ -45,15 +81,47 @@ node monitor.js
 - 基于 Redis 的语义缓存
 - 预算告警（支持 Slack/飞书）
 - CSV 报表导出
+- OpenClaw 集成：告警可通过 OpenClaw 频道发送
 
-### 快速开始
+### 快速开始（独立模式）
 
 ```bash
 git clone https://github.com/maichanks/llm-cost-optimizer.git
 cd llm-cost-optimizer
 pnpm install
 cp .env.example .env
-# 编辑 .env 填入密钥
+# 编辑 .env 填入密钥和告警设置
 node scripts/analyze.js --input ./logs
 node monitor.js
 ```
+
+### OpenClaw 集成
+
+可将此工具作为后台服务运行，并通过 OpenClaw 发送预算告警：
+
+1. **安装到 OpenClaw skills**（可选，统一管理）：
+
+```bash
+cp -r llm-cost-optimizer $HOME/.openclaw/workspace/skills/
+cd $HOME/.openclaw/workspace/skills/llm-cost-optimizer
+pnpm install
+```
+
+2. **配置告警频道** 在 `.env` 中：
+
+```env
+ALERT_CHANNEL=feishu    # 或 telegram, slack
+ALERT_TARGET=ou_OPEN_ID # 你的 OpenClaw 用户/群组 open_id
+```
+
+3. **添加 cron 定时监控**（在独立会话运行）：
+
+```bash
+openclaw cron add \
+  --name "LLM Cost Monitor" \
+  --cron "*/30 * * * *" \
+  --session isolated \
+  --message "node $HOME/.openclaw/workspace/skills/llm-cost-optimizer/monitor.js"
+```
+
+`monitor.js` 脚本会检查使用情况，当超出预算阈值时通过 OpenClaw 消息 API 发送告警。
