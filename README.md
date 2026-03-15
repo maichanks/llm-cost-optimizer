@@ -23,6 +23,19 @@ Utilities to monitor, analyze, and reduce LLM API costs across providers. Can be
 - CSV reports
 - OpenClaw integration: send alerts to OpenClaw channels
 
+### 🚀 One-Click Deploy
+
+Run the automated deployment script:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/maichanks/llm-cost-optimizer/main/deploy.js -o deploy.js && node deploy.js
+```
+
+This will clone the repo, install dependencies, and create a `.env` file.
+
+---
+
+
 ### Quick Start (Standalone)
 
 ```bash
@@ -125,3 +138,24 @@ openclaw cron add \
 ```
 
 `monitor.js` 脚本会检查使用情况，当超出预算阈值时通过 OpenClaw 消息 API 发送告警。
+
+---
+
+## 📝 Keywords
+
+`openclaw`, `llm`, `cost-optimization`, `openrouter`, `budget-monitoring`, `token-tracking`, `semantic-caching`, `redis`, `prompt-compression`, `ai-cost`, `api-cost-management`
+
+---
+
+## 🔗 Related OpenClaw Projects
+
+- [Smart Digest](https://github.com/maichanks/smart-digest) - AI-powered news digest for OpenClaw
+- [OpenClaw GitHub Trending Notifier](https://github.com/maichanks/openclaw-github-trending) - GitHub trending notifications
+- [Security Hardening for OpenClaw](https://github.com/maichanks/security-hardening) - Security toolkit
+- [Multi-Platform Publisher](https://github.com/maichanks/multi-platform-publisher) - Multi-platform content publishing
+
+---
+
+## 📄 License
+
+MIT © 2026 maichanks <hankan1993@gmail.com>
