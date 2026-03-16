@@ -10,9 +10,13 @@
 
 ## English
 
-**Status**: Alpha | **License**: MIT | **Author**: maichanks
+**Status**: Alpha (core design complete, implementation in progress) | **License**: MIT | **Author**: maichanks
 
-Utilities to monitor, analyze, and reduce LLM API costs across providers. Can be used standalone or integrated with OpenClaw.
+> ⚡ **One-Click Deploy**: `curl -fsSL https://raw.githubusercontent.com/maichanks/llm-cost-optimizer/main/deploy.js -o deploy.js && node deploy.js`
+>
+> Monitor, analyze, and reduce LLM API costs across providers. Features planned: token tracking, prompt compression, semantic caching, budget alerts. **Currently a design placeholder** — deploy to see development progress and roadmap.
+
+**📊 Architecture ready** | 🆓 MIT | 🔜 In development | ⭐ OpenClaw compatible
 
 ### Features
 
